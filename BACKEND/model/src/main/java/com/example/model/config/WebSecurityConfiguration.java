@@ -18,14 +18,14 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 
-	 @Override
-	    protected void configure(HttpSecurity http) throws Exception {
-	        http.authorizeRequests()
-//	        .antMatchers("/beekeper/**").hasRole("BEEKEPER")
-	        .antMatchers("/h2-console/**").permitAll()
-	        .and().csrf().disable()
-	        .headers().frameOptions().disable();
-	    }
+//	 @Override
+//	    protected void configure(HttpSecurity http) throws Exception {
+//	        http.authorizeRequests()
+////	        .antMatchers("/beekeper/**").hasRole("BEEKEPER")
+//	        .antMatchers("/h2-console/**").permitAll()
+//	        .and().csrf().disable()
+//	        .headers().frameOptions().disable();
+//	    }
 	 
 //	// Definisanje konfiguracije koja utice na generalnu bezbednost aplikacije
 //	    @Override

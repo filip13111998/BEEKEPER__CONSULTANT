@@ -21,7 +21,11 @@ public class NadmorskaVisina {
 	private float ocena;
 	
 	
-	
+	public NadmorskaVisina( Integer nadmorska_visina, String polozaj_terena) {
+
+		this.nadmorska_visina = nadmorska_visina;
+		this.polozaj_terena = polozaj_terena;
+	}
 	
 
 	public NadmorskaVisina(Long id, Integer nadmorska_visina, String polozaj_terena, float ocena) {

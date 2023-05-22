@@ -1,0 +1,163 @@
+package pasa;
+import com.example.model.facts.Pasa;
+import com.example.model.facts.Kosnica;
+import com.example.model.facts.Dan;
+import com.example.model.facts.Ocena;
+
+rule "Evaluate KOSNICE_PROGNOZA Pasa"
+when
+	//$p:Pasa()
+    $pasa: Pasa(kosnice.size() >= 7 , $kosniceList : kosnice , $daniList : vremenska_prognoza)
+    Number(intValue>=4) from accumulate(
+        $kosnice: Kosnica(broj_ramova_legla > 6 , broj_ramova_meda > 3) from $kosniceList,
+        count($kosnice)
+    )
+    //eval($kosnicaCount >= 4)
+    Number(intValue>=3) from accumulate(
+        $dani: Dan(temperatura > 28) from $pasa.vremenska_prognoza,
+        count($dani)
+    )
+    //eval($danCount >= 3)
+then
+    Ocena ocenaFact = new Ocena();
+    ocenaFact.setType("KOSNICE_PROGNOZA");
+    ocenaFact.setOcena(3.0f);
+    insert(ocenaFact);
+    System.out.println("Pasa meets the conditions.");
+end
+
+rule "Evaluate NADMORSKA_VISINA Pasa 1"
+when
+	//$p:Pasa()
+    $pasa: Pasa(kosnice.size() >= 7 , nadmorksa_visina.nadmorska_visina>=500  , nadmorksa_visina.nadmorska_visina<800 )
+    
+    //eval($danCount >= 3)
+then
+    Ocena ocenaFact = new Ocena();
+    ocenaFact.setType("NADMORSKA_VISINA");
+    ocenaFact.setOcena(3.0f);
+    insert(ocenaFact);
+    System.out.println("Pasa NADMORSKA_VISINA conditions.");
+end
+
+rule "Evaluate NADMORSKA_VISINA Pasa 2"
+when
+	//$p:Pasa()
+    $pasa: Pasa(kosnice.size() >= 7 , nadmorksa_visina.nadmorska_visina>=800  , nadmorksa_visina.nadmorska_visina<1000 )
+    
+    //eval($danCount >= 3)
+then
+    Ocena ocenaFact = new Ocena();
+    ocenaFact.setType("NADMORSKA_VISINA");
+    ocenaFact.setOcena(5.0f);
+    insert(ocenaFact);
+    System.out.println("Pasa NADMORSKA_VISINA conditions.");
+end
+
+rule "Evaluate NADMORSKA_VISINA Pasa 3"
+when
+	//$p:Pasa()
+    $pasa: Pasa(kosnice.size() >= 7 , nadmorksa_visina.nadmorska_visina>1000  , nadmorksa_visina.nadmorska_visina<1300 )
+    
+    //eval($danCount >= 3)
+then
+    Ocena ocenaFact = new Ocena();
+    ocenaFact.setType("NADMORSKA_VISINA");
+    ocenaFact.setOcena(4.0f);
+    insert(ocenaFact);
+    System.out.println("Pasa NADMORSKA_VISINA conditions.");
+end
+
+
+//PRIORDA
+rule "Evaluate PRIRODA Pasa 1"
+when
+	//$p:Pasa()
+	$pasa: Pasa(kosnice.size() >= 7 ,
+    			priroda.teritorijalna_rasprostranjenost>1500,
+    			priroda.teritorijalna_rasprostranjenost<=2500,
+    			priroda.udaljenost_reke>0,
+    			priroda.udaljenost_reke<=1000)
+    
+then
+    Ocena ocenaFact = new Ocena();
+    ocenaFact.setType("PRIRODA");
+    ocenaFact.setOcena(5.0f);
+    insert(ocenaFact);
+    System.out.println("Pasa PRIRODA conditions 1.");
+end
+
+rule "Evaluate PRIRODA Pasa 2"
+when
+	//$p:Pasa()
+    $pasa: Pasa(kosnice.size() >= 7 ,
+    			priroda.teritorijalna_rasprostranjenost>1000,
+    			priroda.teritorijalna_rasprostranjenost<=1500,
+    			priroda.udaljenost_reke>1000,
+    			priroda.udaljenost_reke<=1500)
+
+then
+    Ocena ocenaFact = new Ocena();
+    ocenaFact.setType("PRIRODA");
+    ocenaFact.setOcena(4.0f);
+    insert(ocenaFact);
+    System.out.println("Pasa PRIRODA conditions 2.");
+end
+
+rule "Evaluate PRIRODA Pasa 3"
+when
+	//$p:Pasa()
+	$pasa: Pasa(kosnice.size() >= 7 ,
+    			priroda.teritorijalna_rasprostranjenost>500,
+    			priroda.teritorijalna_rasprostranjenost<=1000,
+    			priroda.udaljenost_reke>1500,
+    			priroda.udaljenost_reke<=3000)
+    
+then
+    Ocena ocenaFact = new Ocena();
+    ocenaFact.setType("PRIRODA");
+    ocenaFact.setOcena(2.0f);
+    insert(ocenaFact);
+    System.out.println("Pasa PRIRODA conditions 3.");
+end
+
+//OCENA PRIRODA_NV ------MOZDA OBRISATI OCENA == USLOVE...bespotrebni su jer se uvek ako je priroda i nv rule izvrsi...
+rule "Evaluate PRIRODA_NADMORSKA_VISINA Pasa 1"
+when
+	//$p:Pasa()
+    $ocena_priroda: Ocena(type=="PRIRODA"  , $o1:ocena ,ocena == 5)
+    $ocena_nadmorska_visina: Ocena(type=="NADMORSKA_VISINA" , $o2:ocena , ocena == 4)
+    //eval($danCount >= 3)
+then
+    Ocena ocenaFact = new Ocena();
+    ocenaFact.setType("PRIRODA_NADMORSKA_VISINA");
+    ocenaFact.setOcena( $o1 + $o2 );
+    insert(ocenaFact);
+    System.out.println("Pasa PRIRODA_NADMORSKA_VISINA conditions.");
+end
+
+
+//OCENA PRIRODA_NV
+rule "Evaluate PRIRODA_NADMORSKA_VISINA_KOSNICE_PROGNOZA Pasa 1"
+when
+	//$p:Pasa()
+    $ocena_priroda_nadmorska_visina: Ocena(type=="PRIRODA_NADMORSKA_VISINA"  , $o1:ocena ,ocena >6 )
+    $ocena_kosnice_prognoza: Ocena(type=="KOSNICE_PROGNOZA" , $o2:ocena , ocena == 3)
+    //eval($danCount >= 3)
+then
+    Ocena ocenaFact = new Ocena();
+    ocenaFact.setType("PRIRODA_NADMORSKA_VISINA_KOSNICE_PROGNOZA");
+    ocenaFact.setOcena( $o1 + $o2 );
+    insert(ocenaFact);
+    System.out.println("Pasa PRIRODA_NADMORSKA_VISINA_KOSNICE_PROGNOZA conditions.");
+end
+
+rule "Always Execute Rule"
+when
+    eval(true)
+then
+    // Rule's consequences (actions) go here
+    System.out.println("This rule always executes.");
+end
+
+

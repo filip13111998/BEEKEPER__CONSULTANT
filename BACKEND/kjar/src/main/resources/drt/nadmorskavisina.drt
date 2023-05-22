@@ -1,0 +1,19 @@
+template header
+v1
+v2
+p1
+o1
+
+package drt;
+import com.example.model.facts.NadmorskaVisina;
+
+template "brodovi"
+
+rule "Brod_@{row.rowNumber}"
+    when
+        $nv : NadmorskaVisina(nadmorska_visina >= Integer.parseInt("@{v1}"),nadmorska_visina < Integer.parseInt("@{v2}"), polozaj_terena == "@{p1}")
+    then
+        modify($nv){ setOcena(Float.parseFloat("@{o1}")) };
+end
+
+end template
