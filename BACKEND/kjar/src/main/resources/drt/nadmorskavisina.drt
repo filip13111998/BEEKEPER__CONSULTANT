@@ -7,9 +7,9 @@ o1
 package drt;
 import com.example.model.facts.NadmorskaVisina;
 
-template "brodovi"
+template "nadmorska_visina"
 
-rule "Brod_@{row.rowNumber}"
+rule "Nadmorska_Visina_@{row.rowNumber}"
     when
         $nv : NadmorskaVisina(nadmorska_visina >= Integer.parseInt("@{v1}"),nadmorska_visina < Integer.parseInt("@{v2}"), polozaj_terena == "@{p1}")
     then

@@ -23,7 +23,11 @@ public class Priroda {
 	private float ocena;
 
 	
-	
+	public Priroda(Integer broj_biljaka, float teritorijalna_rasprostranjenost, float udaljenost_reke) {
+		this.broj_biljaka = broj_biljaka;
+		this.teritorijalna_rasprostranjenost = teritorijalna_rasprostranjenost;
+		this.udaljenost_reke = udaljenost_reke;
+	}
 	
 
 	public Priroda(Long id, Integer broj_biljaka, float teritorijalna_rasprostranjenost, float udaljenost_reke,

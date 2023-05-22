@@ -77,8 +77,8 @@ values (1200 , 'BRDO' , 0);
 
 --PRIRODA
 
-insert into PRIRODA (teritorijalna_rasprostranjenost , udaljenost_reke , ocena) 
-values (1800 , 800 , 0);
+insert into PRIRODA (broj_biljaka , teritorijalna_rasprostranjenost , udaljenost_reke , ocena) 
+values (124 , 1800 , 800 , 0);
 
 --PASA
 

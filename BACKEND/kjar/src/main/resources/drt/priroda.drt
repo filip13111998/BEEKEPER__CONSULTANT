@@ -1,0 +1,102 @@
+template header
+bb1
+bb2
+tr1
+tr2
+ur1
+ur2
+o1
+
+package drt;
+import com.example.model.facts.Priroda;
+import com.example.model.facts.Ocena;
+
+template "priroda"
+
+rule "Priroda_@{row.rowNumber}"
+    when
+        $priroda : Priroda( 
+                       teritorijalna_rasprostranjenost >= Integer.parseInt("@{tr1}") , 
+		       teritorijalna_rasprostranjenost < Integer.parseInt("@{tr2}")  ,
+		       broj_biljaka >= Integer.parseInt("@{bb1}") ,
+		       broj_biljaka < Integer.parseInt("@{bb2}") ,
+		       udaljenost_reke >= "@{ur1}",
+		       udaljenost_reke < "@{ur2}"
+		     
+		     )
+    then
+	Ocena ocenaFact = new Ocena();
+    	ocenaFact.setType("PRIRODA_OCENA");
+    	ocenaFact.setOcena(Float.parseFloat("@{o1}"));
+    	insert(ocenaFact);
+        modify($priroda){ setOcena(Float.parseFloat("@{o1}")) };
+
+end
+
+rule "Priroda_biljke_@{row.rowNumber}"
+    when
+        $priroda : Priroda( 
+
+		       broj_biljaka >= 450
+		     
+		     )
+    then
+	Ocena ocenaFact = new Ocena();
+    	ocenaFact.setType("BILJKE_OCENA");
+    	ocenaFact.setOcena(1.0f);
+    	insert(ocenaFact);
+        //modify($priroda){ setOcena(Float.parseFloat("@{o1}")) };
+
+end
+
+rule "Priroda_teritorija_@{row.rowNumber}"
+    when
+        $priroda : Priroda( 
+		       teritorijalna_rasprostranjenost >= 85000
+		     )
+    then
+	Ocena ocenaFact = new Ocena();
+    	ocenaFact.setType("TERITORIJA_OCENA");
+    	ocenaFact.setOcena(1.0f);
+    	insert(ocenaFact);
+        //modify($priroda){ setOcena(Float.parseFloat("@{o1}")) };
+
+end
+
+rule "Priroda_reka_@{row.rowNumber}"
+    when
+        $priroda : Priroda( 
+		       udaljenost_reke <=300
+		     )
+    then
+	Ocena ocenaFact = new Ocena();
+    	ocenaFact.setType("REKA_OCENA");
+    	ocenaFact.setOcena(1.0f);
+    	insert(ocenaFact);
+        //modify($priroda){ setOcena(Float.parseFloat("@{o1}")) };
+
+end
+
+rule "Priroda_ocena_@{row.rowNumber}"
+    
+    when
+        $ocena_priroda : Ocena( 
+		       type =="PRIRODA_OCENA" , ocena < 6.0f
+		     )
+	$ocena_biljke : Ocena( 
+		       type =="BILJKE_OCENA"
+		     )
+	$ocena_teritorija : Ocena( 
+		       type =="TERITORIJA_OCENA"
+		     )
+	$ocena_reka : Ocena( 
+		       type =="REKA_OCENA"
+		     )
+    then
+	System.out.println($ocena_priroda.getOcena());
+        modify($ocena_priroda){ setOcena($ocena_priroda.getOcena() + 1.0f) };
+	
+end
+
+end template
+
