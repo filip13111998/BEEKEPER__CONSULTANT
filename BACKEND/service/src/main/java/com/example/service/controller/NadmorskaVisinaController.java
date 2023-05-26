@@ -2,6 +2,7 @@ package com.example.service.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +26,11 @@ public class NadmorskaVisinaController {
     }
     
     @PostMapping("/nadmorska-visina/ocena")
-    public Ocena ocena(@RequestBody NadmorskaVisina nadmorskaVisina) {
+    public ResponseEntity<Ocena> ocena(@RequestBody NadmorskaVisina nadmorskaVisina) {
         
     	System.out.println(nadmorskaVisina);
     	
-    	return nvs.calculate(nadmorskaVisina);
+    	return ResponseEntity.ok(nvs.calculate(nadmorskaVisina));
     }
 	
 	

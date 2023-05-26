@@ -157,13 +157,13 @@ values ( 10 , 10 ,10,10,5);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
 values ( 6 , 6 ,2,2,2);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
-values ( 2 , 1 ,3,3,1);
+values ( 9 , 1 ,3,3,1);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
-values ( 4 , 9 ,7,2,3);
+values ( 9 , 9 ,7,2,3);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
-values ( 7 , 10 ,7,10,4);
+values ( 9 , 10 ,7,10,4);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
-values ( 6 , 2 ,9,9,3);
+values ( 9 , 2 ,9,9,3);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
 values ( 9 , 9 ,9,9,5);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
@@ -175,15 +175,15 @@ values ( 8 , 8 ,8,8,4);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
 values ( 10 , 10 ,10,10,5);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
-values ( 4 , 6 ,2,2,2);
+values ( 9 , 6 ,2,2,2);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
-values ( 2 , 2 ,1,3,1);
+values ( 9 , 2 ,1,3,1);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
 values ( 4 , 9 ,7,2,3);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
-values ( 6 , 10 ,10,6,4);
+values ( 9 , 10 ,10,6,4);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
-values ( 6 , 9 ,4,4,3);
+values ( 9 , 9 ,4,4,3);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
 values ( 10 , 10 ,9,9,5);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
@@ -200,7 +200,7 @@ values ( 2 , 8 ,3,3,2);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
 values ( 4 , 9 ,7,2,3);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
-values ( 2 , 10 ,10,10,4);
+values ( 9 , 10 ,10,10,4);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)
 values ( 6 , 2 ,9,9,3);
 insert into KOSNICA ( broj_ramova_legla , broj_ramova_meda , broj_ramova_pcela , broj_ramova_polena , ocena)

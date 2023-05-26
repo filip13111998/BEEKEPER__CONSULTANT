@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.model.facts.Dan;
 import com.example.model.facts.Ocena;
 import com.example.service.dto.request.PasaFormDTO;
+import com.example.service.dto.response.IstorijaDTO;
 import com.example.service.dto.response.PasaDTO;
 import com.example.service.service.PasaService;
 
@@ -32,8 +33,8 @@ public class PasaController {
 //    }
 	
 	@GetMapping("/pasa/{id}")
-    public Ocena calculate(@PathVariable Long id) {
-        return ps.calculate(id);
+    public ResponseEntity<Ocena> calculate(@PathVariable Long id) {
+        return ResponseEntity.ok(ps.calculate(id));
     }
 	
 	@GetMapping("/pasa/all")
@@ -42,8 +43,9 @@ public class PasaController {
     }
 	
 	@PostMapping("/pasa/istorija")
-    public ResponseEntity<String> pasaIstorija(@RequestBody PasaFormDTO pfdto) {
-        return ResponseEntity.ok(ps.pasaIstorija(pfdto));
+    public ResponseEntity<IstorijaDTO> pasaIstorija(@RequestBody PasaFormDTO pfdto) {
+		String answer = ps.pasaIstorija(pfdto);
+        return ResponseEntity.ok(new IstorijaDTO(answer));
     }
 	
 }

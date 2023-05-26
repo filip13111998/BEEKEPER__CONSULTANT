@@ -21,6 +21,11 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { TestComponent } from './components/test/test.component';
+import { PrirodaComponent } from './components/priroda/priroda.component';
+import { PasaComponent } from './components/pasa/pasa.component';
+import { NadmorskaVisinaComponent } from './components/nadmorska-visina/nadmorska-visina.component';
+import { KosnicaComponent } from './components/kosnica/kosnica.component';
+import { DanComponent } from './components/dan/dan.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +33,12 @@ import { TestComponent } from './components/test/test.component';
     LoginComponent,
     HomeComponent,
     MenuComponent,
-    TestComponent
+    TestComponent,
+    PrirodaComponent,
+    PasaComponent,
+    NadmorskaVisinaComponent,
+    KosnicaComponent,
+    DanComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,37 @@
+<app-menu></app-menu>
+
+<div style="height: 20px;"></div>
+
+<div style="width:20%;text-align: center;margin-left: 40%;margin-top: 2%;">
+
+  <form [formGroup]="prirodaForm">
+    <div class="mb-3">
+      <label for="broj_biljakaInput" class="form-label">BROJ BILJAKA</label>
+      <input type="text" formControlName="broj_biljaka" class="form-control" id="broj_biljakaInput">
+    </div>
+
+    <div class="mb-3">
+      <label for="teritorijalna_rasprostranjenostInput" class="form-label">TERITORIJALNA RASPROSTRANJENOST</label>
+      <input type="text" formControlName="teritorijalna_rasprostranjenost" class="form-control"
+        id="teritorijalna_rasprostranjenostInput">
+    </div>
+
+    <div class="mb-3">
+      <label for="udaljenost_rekeInput" class="form-label">UDALJENOST REKE</label>
+      <input type="text" formControlName="udaljenost_reke" class="form-control" id="udaljenost_rekeInput">
+    </div>
+
+
+
+    <button type="submit" class="btn btn-primary" (click)="ocena()" style="margin-top: 1em;">OCENA</button>
+
+    <div style="height: 20px;"></div>
+
+    <div class="form-group">
+      <label for="ocenaInput">OCENA</label>
+      <input type="text" formControlName="ocena" class="form-control" id="ocenaInput">
+    </div>
+
+  </form>
+
+</div>
