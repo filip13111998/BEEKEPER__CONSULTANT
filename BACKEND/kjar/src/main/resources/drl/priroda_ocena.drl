@@ -1,0 +1,33 @@
+package drl;
+import com.example.model.facts.Ocena;
+
+
+rule "PRIRODA OCENA INSERT"
+
+when
+	accumulate(
+        $o : Ocena( type matches "^PRIRODA_.*", $ocena : ocena ),
+        $avg : average($ocena)
+    )
+    not(Ocena(type == "FINISH_PRIRODA_OCENA"))
+then
+	System.out.println("INSERT PRIRODA Ocena: " + $avg);
+	Ocena ocenaFact = new Ocena();
+	ocenaFact.setType("FINISH_PRIRODA_OCENA");
+	ocenaFact.setOcena(Float.parseFloat($avg.toString()));
+	insert(ocenaFact);
+end;
+
+rule "PRIRODA OCENA UPDATE"
+
+when
+	accumulate(
+        $o : Ocena( type matches "^PRIRODA_.*", $ocena : ocena ),
+       	$avg : average($ocena)
+    )
+    $uo : Ocena(type == "FINISH_PRIRODA_OCENA")
+then
+	System.out.println("UPDATE Sum of PRIRODA Ocena: " + $avg);
+
+	modify($uo){setOcena(Float.parseFloat($avg.toString()))};
+end;

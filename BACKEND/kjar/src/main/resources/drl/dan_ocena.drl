@@ -1,0 +1,34 @@
+package drl;
+import com.example.model.facts.Ocena;
+
+
+rule "DAN OCENA INSERT"
+
+when
+	accumulate(
+        $o : Ocena( type matches "^DAN_.*", $ocena : ocena ),
+        $avg : average($ocena)
+    )
+    not(Ocena(type == "FINISH_DAN_OCENA"))
+then
+	System.out.println("INSERT DAN Ocena: " + $avg);
+	Ocena ocenaFact = new Ocena();
+	ocenaFact.setType("FINISH_DAN_OCENA");
+	ocenaFact.setOcena(Float.parseFloat($avg.toString()));
+	insert(ocenaFact);
+end;
+
+rule "DAN OCENA UPDATE"
+
+when
+	accumulate(
+        $o : Ocena( type matches "^DAN_.*", $ocena : ocena ),
+        $avg : average($ocena)
+    )
+    $uo : Ocena(type == "FINISH_DAN_OCENA")
+then
+	System.out.println("UPDATE Sum of DAN Ocena: " + $avg);
+
+	modify($uo){setOcena(Float.parseFloat($avg.toString()))};
+end;
+

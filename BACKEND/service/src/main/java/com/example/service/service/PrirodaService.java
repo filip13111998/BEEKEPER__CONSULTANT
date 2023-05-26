@@ -13,6 +13,7 @@ import com.example.model.facts.Ocena;
 import com.example.model.facts.Priroda;
 import com.example.service.config.DroolConfig;
 import com.example.service.repository.DanRepository;
+import com.example.service.template.KieSessionsTemplates;
 import com.example.service.template.NadmorskaVisinaTemplate;
 import com.example.service.template.PrirodaTemplate;
 
@@ -46,6 +47,35 @@ public class PrirodaService {
             }
         }
 
+		return null;
+	}
+
+	public Ocena calculate(Priroda priroda) {
+		
+		KieSessionsTemplates.reset();
+		
+		KieSessionsTemplates.addPrirodaBrojBiljakaToSession();
+		KieSessionsTemplates.addPrirodaTeritorijalnaRasprostranjenostToSession();
+		KieSessionsTemplates.addPrirodaUdaljenostRekeToSession();
+		KieSessionsTemplates.addPrirodaBonusOcenaToSession();
+		KieSessionsTemplates.addFnishPrirodaOcenaToSession();
+		
+		KieSession kieSession = KieSessionsTemplates.generateKieSession();
+
+		kieSession.insert(priroda);
+        kieSession.fireAllRules();
+        kieSession.dispose();
+        
+        for (FactHandle factHandle : kieSession.getFactHandles()) {
+            Object fact = kieSession.getObject(factHandle);
+            if (fact instanceof Ocena) {
+                Ocena ocena = (Ocena) fact;
+                if(ocena.getType().equals("FINISH_PRIRODA_OCENA")) {
+                	return ocena;
+                }
+            }
+        }
+				
 		return null;
 	}
 	

@@ -1,0 +1,17 @@
+package drl;
+import com.example.model.facts.Ocena;
+import com.example.model.facts.Priroda;
+
+rule "PRIRODA BONUS OCENA INSERT"
+
+when
+
+    $p : Priroda( broj_biljaka > 20 , teritorijalna_rasprostranjenost > 5000 , udaljenost_reke < 250 )
+    
+then
+	System.out.println("INSERT PRIRODA BONUS Ocena");
+	Ocena ocenaFact = new Ocena();
+	ocenaFact.setType("PRIRODA_BONUS_OCENA");
+	ocenaFact.setOcena(1.0f);
+	insert(ocenaFact);
+end;

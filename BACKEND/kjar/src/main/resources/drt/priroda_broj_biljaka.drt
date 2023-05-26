@@ -1,0 +1,27 @@
+template header
+pbb1
+pbb2
+o1
+
+package drt;
+import com.example.model.facts.Priroda;
+import com.example.model.facts.Ocena;
+
+template "priroda broj biljaka"
+
+rule "priroda_broj_biljaka_template_@{row.rowNumber}"
+    when
+        $p : Priroda( 
+		   broj_biljaka >= Integer.parseInt("@{pbb1}") ,
+		   broj_biljaka < Integer.parseInt("@{pbb2}") 
+		)
+    then
+	System.out.println("PRIRODA BROJ BILJAKA");
+	Ocena ocenaFact = new Ocena();
+    	ocenaFact.setType("PRIRODA_BROJ_BILJAKA_OCENA");
+    	ocenaFact.setOcena(Float.parseFloat("@{o1}"));
+    	insert(ocenaFact);
+
+end
+
+end template

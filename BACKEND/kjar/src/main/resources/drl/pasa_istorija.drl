@@ -1,0 +1,80 @@
+package drl;
+import com.example.model.facts.Pasa;
+import com.example.model.facts.Kosnica;
+import com.example.model.facts.Ocena;
+
+import java.time.LocalDate;
+
+global Integer years;
+global String type;
+global Integer counter;
+
+rule "PASA ISTORIJA NO"
+
+when
+
+then
+	System.out.println("INSERT NO");
+	Ocena ocenaFact = new Ocena();
+	ocenaFact.setType("NO");
+	insert(ocenaFact);
+end;
+
+
+
+rule "PASA ISTORIJA YES"
+when
+    $no: Ocena(type == "NO")
+        
+    $count: Long() from accumulate(
+        $p: Pasa(
+            ocena < 3,
+            tip_pase == type,
+            godina > LocalDate.now().getYear() - years,
+            priroda.ocena < 4
+        )  
+        ,
+        count($p)
+    )
+    eval($count >= 3)
+    
+    $pasa: Pasa(
+    		$kosnice: kosnice, 
+    		ocena < 3,
+            tip_pase == type,
+            godina > LocalDate.now().getYear() - years,
+            priroda.ocena < 4
+    )
+    
+
+    $kosniceCount: Long() from accumulate(
+        $kosnica: Kosnica(ocena < 5, broj_ramova_legla < 8) from $kosnice,
+        count($kosnica)
+    )
+    eval($kosniceCount >= 2)
+    
+     $pasa2: Pasa(
+    		this != $pasa,
+    		$kosnice2: kosnice, 
+    		ocena < 3,
+            tip_pase == type,
+            godina > LocalDate.now().getYear() - years,
+            priroda.ocena < 4
+    )
+    
+    $kosniceCount2: Long() from accumulate(
+        $kosnica: Kosnica(ocena < 5, broj_ramova_legla < 8) from $kosnice2,
+        count($kosnica)
+    )
+    eval($kosniceCount2 >= 2)
+  
+then
+    System.out.println("PASA ISTORIJA : " + $count + " :kosnica: " + $kosniceCount + " :kosnica2: " + $kosniceCount2);
+    modify($no) {
+        setType("YES");
+    };
+   
+end;
+
+
+

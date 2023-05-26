@@ -22,8 +22,10 @@ rule "Priroda_@{row.rowNumber}"
 		       broj_biljaka < Integer.parseInt("@{bb2}") ,
 		       udaljenost_reke >= "@{ur1}",
 		       udaljenost_reke < "@{ur2}"
+			
 		     
 		     )
+	not(Ocena(type == "PRIRODA_OCENA"))
     then
 	Ocena ocenaFact = new Ocena();
     	ocenaFact.setType("PRIRODA_OCENA");
@@ -38,8 +40,9 @@ rule "Priroda_biljke_@{row.rowNumber}"
         $priroda : Priroda( 
 
 		       broj_biljaka >= 450
-		     
+		     	
 		     )
+	not(Ocena(type == "BILJKE_OCENA"))
     then
 	Ocena ocenaFact = new Ocena();
     	ocenaFact.setType("BILJKE_OCENA");
@@ -53,7 +56,9 @@ rule "Priroda_teritorija_@{row.rowNumber}"
     when
         $priroda : Priroda( 
 		       teritorijalna_rasprostranjenost >= 85000
+			
 		     )
+	not(Ocena(type == "TERITORIJA_OCENA"))
     then
 	Ocena ocenaFact = new Ocena();
     	ocenaFact.setType("TERITORIJA_OCENA");
@@ -68,6 +73,7 @@ rule "Priroda_reka_@{row.rowNumber}"
         $priroda : Priroda( 
 		       udaljenost_reke <=300
 		     )
+	not(Ocena(type == "REKA_OCENA"))
     then
 	Ocena ocenaFact = new Ocena();
     	ocenaFact.setType("REKA_OCENA");
@@ -77,26 +83,27 @@ rule "Priroda_reka_@{row.rowNumber}"
 
 end
 
+
+
+
 rule "Priroda_ocena_@{row.rowNumber}"
-    
+   
     when
         $ocena_priroda : Ocena( 
 		       type =="PRIRODA_OCENA" , ocena < 6.0f
 		     )
-	$ocena_biljke : Ocena( 
-		       type =="BILJKE_OCENA"
-		     )
-	$ocena_teritorija : Ocena( 
-		       type =="TERITORIJA_OCENA"
-		     )
-	$ocena_reka : Ocena( 
-		       type =="REKA_OCENA"
-		     )
+	$count : Number(intValue > 1) from accumulate(
+
+        	$ocena : Ocena(),
+        	count($ocena)
+    	)
     then
 	System.out.println($ocena_priroda.getOcena());
-        modify($ocena_priroda){ setOcena($ocena_priroda.getOcena() + 1.0f) };
+        modify($ocena_priroda){ setOcena($ocena_priroda.getOcena() - 1.0f + + $count.floatValue()) };
 	
 end
+
+
 
 end template
 

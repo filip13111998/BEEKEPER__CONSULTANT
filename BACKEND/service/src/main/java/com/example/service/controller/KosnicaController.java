@@ -8,28 +8,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.facts.Dan;
+import com.example.model.facts.Kosnica;
 import com.example.model.facts.Ocena;
 import com.example.service.service.DanService;
+import com.example.service.service.KosnicaService;
 
 @RestController
 @RequestMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-public class DanController {
+public class KosnicaController {
+	
 	
 	@Autowired
-	private DanService ds;
+	private KosnicaService ks;
 	
-    @PostMapping("/dan")
-    public float orderNow(@RequestBody Dan dan) {
-        return ds.getOcena(dan);
-    }
-    
-    @PostMapping("/dan/ocena")
-    public Ocena ocena(@RequestBody Dan dan) {
+	@PostMapping("/kosnica/ocena")
+    public Ocena ocena(@RequestBody Kosnica kosnica) {
         
-    	System.out.println(dan);
+    	System.out.println(kosnica);
     	
-    	return ds.calculate(dan);
+    	return ks.calculate(kosnica);
 //    	return null;
     }
+	
 	
 }

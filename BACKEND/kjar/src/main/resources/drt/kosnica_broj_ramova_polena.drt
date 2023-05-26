@@ -1,0 +1,26 @@
+template header
+brpo1
+brpo2
+o1
+
+package drt;
+import com.example.model.facts.Kosnica;
+import com.example.model.facts.Ocena;
+
+template "Kosnica broj ramova polena"
+
+rule "kosnica_broj_ramova_polena_template_@{row.rowNumber}"
+    when
+        $k : Kosnica( 
+		   broj_ramova_polena >= "@{brpo1}",
+		   broj_ramova_polena < "@{brpo2}"
+		)
+    then
+	System.out.println("KOSNICA BROJ RAMOVA POLENA");
+	Ocena ocenaFact = new Ocena();
+    	ocenaFact.setType("KOSNICA_BROJ_RAMOVA_POLENA_OCENA");
+    	ocenaFact.setOcena(Float.parseFloat("@{o1}"));
+    	insert(ocenaFact);
+end
+
+end template

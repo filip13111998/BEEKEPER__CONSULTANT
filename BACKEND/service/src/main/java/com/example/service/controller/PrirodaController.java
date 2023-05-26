@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.model.facts.Dan;
 import com.example.model.facts.NadmorskaVisina;
 import com.example.model.facts.Ocena;
 import com.example.model.facts.Priroda;
@@ -26,5 +27,12 @@ public class PrirodaController {
         return ps.setOcena(priroda);
     }
 
+    @PostMapping("/priroda/ocena")
+    public Ocena ocena(@RequestBody Priroda priroda) {
+        
+    	System.out.println(priroda);
+    	
+    	return ps.calculate(priroda);
+    }
 
 }

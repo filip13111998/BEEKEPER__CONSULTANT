@@ -1,7 +1,10 @@
 package com.example.service.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.facts.Dan;
 import com.example.model.facts.Ocena;
+import com.example.service.dto.request.PasaFormDTO;
+import com.example.service.dto.response.PasaDTO;
 import com.example.service.service.PasaService;
 
 @RestController
@@ -21,9 +26,24 @@ public class PasaController {
 	@Autowired
 	private PasaService ps;
 	
+//	@GetMapping("/pasa/{id}")
+//    public Ocena orderNow(@PathVariable Long id) {
+//        return ps.executeRule(id);
+//    }
+	
 	@GetMapping("/pasa/{id}")
-    public Ocena orderNow(@PathVariable Long id) {
-        return ps.executeRule(id);
+    public Ocena calculate(@PathVariable Long id) {
+        return ps.calculate(id);
+    }
+	
+	@GetMapping("/pasa/all")
+    public ResponseEntity<List<PasaDTO>> getAll() {
+        return ResponseEntity.ok(ps.getAll());
+    }
+	
+	@PostMapping("/pasa/istorija")
+    public ResponseEntity<String> pasaIstorija(@RequestBody PasaFormDTO pfdto) {
+        return ResponseEntity.ok(ps.pasaIstorija(pfdto));
     }
 	
 }

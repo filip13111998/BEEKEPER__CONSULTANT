@@ -1,0 +1,33 @@
+package drl;
+import com.example.model.facts.Ocena;
+
+
+rule "PASA OCENA INSERT"
+
+when
+	accumulate(
+        $o : Ocena( type matches "^FINISH_.*", $ocena : ocena ),
+        $sum : sum($ocena)
+    )
+    not(Ocena(type == "PASA_OCENA"))
+then
+	System.out.println("INSERT PASA Ocena: " + $sum);
+	Ocena ocenaFact = new Ocena();
+	ocenaFact.setType("PASA_OCENA");
+	ocenaFact.setOcena(Float.parseFloat($sum.toString()));
+	insert(ocenaFact);
+end;
+
+rule "PASA OCENA UPDATE"
+
+when
+	accumulate(
+        $o : Ocena( type matches "^FINISH_.*", $ocena : ocena ),
+        $sum : sum($ocena)
+    )
+    $uo : Ocena(type == "PASA_OCENA")
+then
+	System.out.println("UPDATE Sum of PASA Ocena: " + $sum);
+
+	modify($uo){setOcena(Float.parseFloat($sum.toString()))};
+end;

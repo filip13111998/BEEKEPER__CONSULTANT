@@ -1,0 +1,27 @@
+template header
+j1
+j2
+o1
+
+package drt;
+import com.example.model.facts.Dan;
+import com.example.model.facts.Ocena;
+
+template "dan jacina vetra"
+
+rule "dan_jacina_vetra_template_@{row.rowNumber}"
+    when
+        $d : Dan( 
+		   jacina_vetra >= Integer.parseInt("@{j1}") ,
+		   jacina_vetra < Integer.parseInt("@{j2}") 
+		)
+    then
+	System.out.println("DAN JACINA VETRA");
+	Ocena ocenaFact = new Ocena();
+    	ocenaFact.setType("DAN_JACINA_VETRA_OCENA");
+    	ocenaFact.setOcena(Float.parseFloat("@{o1}"));
+    	insert(ocenaFact);
+
+end
+
+end template

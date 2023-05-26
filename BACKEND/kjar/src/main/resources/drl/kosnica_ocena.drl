@@ -1,0 +1,33 @@
+package drl;
+import com.example.model.facts.Ocena;
+
+
+rule "KOSNICA OCENA INSERT"
+
+when
+	accumulate(
+        $o : Ocena( type matches "^KOSNICA_.*", $ocena : ocena ),
+        $avg : average($ocena)
+    )
+    not(Ocena(type == "FINISH_KOSNICA_OCENA"))
+then
+	System.out.println("INSERT KOSNICA Ocena: " + $avg);
+	Ocena ocenaFact = new Ocena();
+	ocenaFact.setType("FINISH_KOSNICA_OCENA");
+	ocenaFact.setOcena(Float.parseFloat($avg.toString()));
+	insert(ocenaFact);
+end;
+
+rule "KOSNICA OCENA UPDATE"
+
+when
+	accumulate(
+        $o : Ocena( type matches "^KOSNICA_.*", $ocena : ocena ),
+        $avg : average($ocena)
+    )
+    $uo : Ocena(type == "FINISH_KOSNICA_OCENA")
+then
+	System.out.println("UPDATE Sum of KOSNICA Ocena: " + $avg);
+
+	modify($uo){setOcena(Float.parseFloat($avg.toString()))};
+end;

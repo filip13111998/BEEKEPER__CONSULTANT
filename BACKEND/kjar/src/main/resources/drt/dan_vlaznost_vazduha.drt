@@ -1,0 +1,28 @@
+template header
+v1
+v2
+o1
+
+package drt;
+import com.example.model.facts.Dan;
+import com.example.model.facts.Ocena;
+
+template "dan"
+
+rule "dan_template_@{row.rowNumber}"
+    when
+        $nv : Dan( 
+		   vlaznost_vazduha >= Integer.parseInt("@{v1}") ,
+		   vlaznost_vazduha < Integer.parseInt("@{v2}") 
+		)
+    then
+	System.out.println("DAN VLAZNOST VAZDUHA");
+	Ocena ocenaFact = new Ocena();
+    	ocenaFact.setType("DAN_VLAZNOST_VAZDUHA_OCENA");
+    	ocenaFact.setOcena(Float.parseFloat("@{o1}"));
+    	insert(ocenaFact);
+        //modify($priroda){ setOcena(Float.parseFloat("@{o1}")) };
+        //modify($nv){ setOcena(Float.parseFloat("@{o1}")) };
+end
+
+end template

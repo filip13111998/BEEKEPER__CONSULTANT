@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.model.facts.Dan;
 import com.example.model.facts.NadmorskaVisina;
+import com.example.model.facts.Ocena;
 import com.example.service.service.NadmorskaVisinaService;
 
 @RestController
@@ -20,6 +22,14 @@ public class NadmorskaVisinaController {
     @PostMapping("/nadmorska-visina")
     public NadmorskaVisina orderNow(@RequestBody NadmorskaVisina nv) {
         return nvs.setOcena(nv);
+    }
+    
+    @PostMapping("/nadmorska-visina/ocena")
+    public Ocena ocena(@RequestBody NadmorskaVisina nadmorskaVisina) {
+        
+    	System.out.println(nadmorskaVisina);
+    	
+    	return nvs.calculate(nadmorskaVisina);
     }
 	
 	

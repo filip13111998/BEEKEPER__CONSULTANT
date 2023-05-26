@@ -1,0 +1,27 @@
+template header
+nv1
+nv2
+o1
+
+package drt;
+import com.example.model.facts.NadmorskaVisina;
+import com.example.model.facts.Ocena;
+
+template "nadmorska visina nadmorska visina"
+
+rule "nadmorska_visina_nadmorska_visina_template_@{row.rowNumber}"
+    when
+        $nv : NadmorskaVisina( 
+		   nadmorska_visina >= Integer.parseInt("@{nv1}") ,
+		   nadmorska_visina < Integer.parseInt("@{nv2}") 
+		)
+    then
+	System.out.println("NADMORSKA VISINA NADMORSKA_VISINA");
+	Ocena ocenaFact = new Ocena();
+    	ocenaFact.setType("NADMORSKA_VISINA_NADMORSKA_VISINA_OCENA");
+    	ocenaFact.setOcena(Float.parseFloat("@{o1}"));
+    	insert(ocenaFact);
+
+end
+
+end template

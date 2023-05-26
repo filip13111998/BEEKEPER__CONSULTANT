@@ -1,0 +1,27 @@
+template header
+ptr1
+ptr2
+o1
+
+package drt;
+import com.example.model.facts.Priroda;
+import com.example.model.facts.Ocena;
+
+template "priroda teritorijalna rasprostranjenost"
+
+rule "priroda_teritorijalna_rasprostranjenost_template_@{row.rowNumber}"
+    when
+        $p : Priroda( 
+		   teritorijalna_rasprostranjenost >= Integer.parseInt("@{ptr1}") ,
+		   teritorijalna_rasprostranjenost < Integer.parseInt("@{ptr2}") 
+		)
+    then
+	System.out.println("PRIRODA TERITORIJALNA RASPROSTRANJENOST");
+	Ocena ocenaFact = new Ocena();
+    	ocenaFact.setType("PRIRODA_TERITORIJALNA_RASPROSTRANJENOST_OCENA");
+    	ocenaFact.setOcena(Float.parseFloat("@{o1}"));
+    	insert(ocenaFact);
+
+end
+
+end template

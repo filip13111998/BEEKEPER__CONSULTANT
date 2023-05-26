@@ -1,0 +1,33 @@
+package drl;
+import com.example.model.facts.Ocena;
+
+
+rule "NADMORSKA VISINA OCENA INSERT"
+
+when
+	accumulate(
+        $o : Ocena( type matches "^NADMORSKA_VISINA_.*", $ocena : ocena ),
+        $avg : average($ocena)
+    )
+    not(Ocena(type == "FINISH_NADMORSKA_VISINA_OCENA"))
+then
+	System.out.println("INSERT NADMORSKA VISINA Ocena: " + $avg);
+	Ocena ocenaFact = new Ocena();
+	ocenaFact.setType("FINISH_NADMORSKA_VISINA_OCENA");
+	ocenaFact.setOcena(Float.parseFloat($avg.toString()));
+	insert(ocenaFact);
+end;
+
+rule "NADMORSKA VISINA OCENA UPDATE"
+
+when
+	accumulate(
+        $o : Ocena( type matches "^NADMORSKA_VISINA_.*", $ocena : ocena ),
+       	$avg : average($ocena)
+    )
+    $uo : Ocena(type == "FINISH_NADMORSKA_VISINA_OCENA")
+then
+	System.out.println("UPDATE Sum of NADMORSKA VISINA Ocena: " + $avg);
+
+	modify($uo){setOcena(Float.parseFloat($avg.toString()))};
+end;

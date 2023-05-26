@@ -14,8 +14,8 @@ import org.kie.internal.utils.KieHelper;
 public class NadmorskaVisinaTemplate {
 	
 	public static KieSession getKieHelper() {
-		KieServices ks = KieServices.Factory.get();
-        KieContainer kc = ks.newKieClasspathContainer();
+//		KieServices ks = KieServices.Factory.get();
+//        KieContainer kc = ks.newKieClasspathContainer();
 
         InputStream template = NadmorskaVisinaTemplate.class.getResourceAsStream("/drt/nadmorskavisina.drt");
 
@@ -37,6 +37,7 @@ public class NadmorskaVisinaTemplate {
 
         KieHelper kieHelper = new KieHelper();
         kieHelper.addContent(drl, ResourceType.DRL);
+        
         	
         KieSession ksession = kieHelper.build().newKieSession();
         

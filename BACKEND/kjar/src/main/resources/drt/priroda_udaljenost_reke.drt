@@ -1,0 +1,27 @@
+template header
+pur1
+pur2
+o1
+
+package drt;
+import com.example.model.facts.Priroda;
+import com.example.model.facts.Ocena;
+
+template "priroda udaljenost reke"
+
+rule "priroda_udaljenost_reke_template_@{row.rowNumber}"
+    when
+        $p : Priroda( 
+		   udaljenost_reke >= Integer.parseInt("@{pur1}") ,
+		   udaljenost_reke < Integer.parseInt("@{pur2}") 
+		)
+    then
+	System.out.println("PRIRODA UDALJENOST REKE");
+	Ocena ocenaFact = new Ocena();
+    	ocenaFact.setType("PRIRODA_UDALJENOST_REKE_OCENA");
+    	ocenaFact.setOcena(Float.parseFloat("@{o1}"));
+    	insert(ocenaFact);
+
+end
+
+end template
